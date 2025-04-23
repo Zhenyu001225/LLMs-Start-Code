@@ -11,8 +11,7 @@ lm-evaluation-harness/
         ├── __init__.py
         ├── anthropic_llms.py
         ├── api_models.py
-        ├── configuration_deepseek.py
-        ├── modeling_deepseek.py  ← Implements DeepSeek model integration
+        ├── modeling_llama.py  ← Implements llama model integration
         └── ...
 ```
 
@@ -20,6 +19,9 @@ Env setting:
 ```
 conda create -n llm python==3.9
 conda activate llm
+pip install importlib_metadata
+pip install SentencePiece
+pip install protobuf
 cd lm-evaluation-harness
 pip install -e .
 ```

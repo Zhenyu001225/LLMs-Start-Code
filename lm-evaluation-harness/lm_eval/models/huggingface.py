@@ -37,7 +37,7 @@ from lm_eval.models.utils import (
     pad_and_concat,
     stop_sequences_criteria,
 )
-from .modeling_deepseek import DeepseekForCausalLM
+from .modeling_llama import LlamaForCausalLM
 
 
 eval_logger = utils.eval_logger
@@ -501,7 +501,7 @@ class HFLM(TemplateLM):
         if self.AUTO_MODEL_CLASS is None:
             if self.backend == "causal":
                 #self.AUTO_MODEL_CLASS = transformers.AutoModelForCausalLM
-                self.AUTO_MODEL_CLASS = DeepseekForCausalLM
+                self.AUTO_MODEL_CLASS = LlamaForCausalLM
             elif self.backend == "seq2seq":
                 self.AUTO_MODEL_CLASS = transformers.AutoModelForSeq2SeqLM
 
@@ -855,7 +855,7 @@ class HFLM(TemplateLM):
                 ).logits
             else:
                 #assert self.AUTO_MODEL_CLASS == transformers.AutoModelForCausalLM
-                assert self.AUTO_MODEL_CLASS == DeepseekForCausalLM
+                assert self.AUTO_MODEL_CLASS == LlamaForCausalLM
                 return self.model(inps).logits
 
     def _model_generate(self, context, max_length, stop, **generation_kwargs):
