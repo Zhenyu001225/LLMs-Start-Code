@@ -1,9 +1,7 @@
-This is the beginning of how to modify a LLama-2-7B based on the Hugging Face modeling.
+This guide will show you how to modify and evaluate a LLaMA-2-7B model from [HuggingFace](https://huggingface.co/) using the [lm-eval-harness](https://github.com/EleutherAI/lm-evaluation-harness) framework.
 
-The evaluation framework is from [lm-eval-harness](https://github.com/EleutherAI/lm-evaluation-harness). And I'll show you how to modify a model (e.g. llama2-7B) for evaluation.
-
-0. Huggingface Framework:
-Usually, opensource models' parameters are stored in the model card of huggingface. For example, when using [Llama-2-7B](https://huggingface.co/meta-llama/Llama-2-7b-hf/tree/main), the code structure is shown below:
+0. HuggingFace Model Format:
+Most open-source models store their parameters and configuration files on Hugging Face. For example, [Llama-2-7B](https://huggingface.co/meta-llama/Llama-2-7b-hf/tree/main) model repository includes the following structure:
 
 ```
 Llama-2-7b-hf/
@@ -29,8 +27,10 @@ Llama-2-7b-hf/
 ├── tokenizer.model                    # SentencePiece model
 └── tokenizer_config.json              # Tokenizer config (e.g., bos_token, eos_token)
 ```
-1. Env setting:
-   
+1.  Environment Setup:
+
+To set up the evaluation environment:
+
 ```
 conda create -n llm python==3.9
 conda activate llm
@@ -41,7 +41,9 @@ cd lm-evaluation-harness
 pip install -e .
 ```
 
-2. Find modeling.py here:
+2. Find modeling.py here.
+
+To modify your LlamA model, navigate to:
 
 ```
 lm-evaluation-harness/
@@ -53,12 +55,14 @@ lm-evaluation-harness/
         ├── modeling_llama.py  ← Implements llama model integration
         └── ...
 ```
-3. Command line
+3. Run evaluation.
 
-You can change any llama model by replacing the path of the hugging face model card. MMLU and Hellaswag are two evaluation datasets.
+To evaluate the model on benchmarks like MMLU and Hellaswag, use the following command:
+
 ```
 CUDA_VISIBLE_DEVICES=0,1,2,3 accelerate launch -m lm_eval --model hf \
     --model_args pretrained=meta-llama/Llama-2-7b-hf,trust_remote_code=True \
     --tasks mmlu,hellaswag \
     --batch_size 4
 ```
+This command is in lm_eval.sh
